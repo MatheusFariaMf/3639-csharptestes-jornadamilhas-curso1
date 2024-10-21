@@ -10,6 +10,12 @@ public class GerenciadorDeOfertas
 {
     private List<OfertaViagem> ofertaViagem = new List<OfertaViagem>();
 
+    public List<OfertaViagem> ListaOfertas
+    {
+        get { return ofertaViagem; }
+        set { ofertaViagem = value; }
+    }
+
     public GerenciadorDeOfertas(List<OfertaViagem> ofertaViagem)
     {
         this.ofertaViagem = ofertaViagem;
@@ -81,4 +87,11 @@ public class GerenciadorDeOfertas
             Console.WriteLine(oferta);
         }
     }
+
+    public OfertaViagem? RecuperaMaiorDesconto(Func<OfertaViagem, bool> condicao) =>
+        ofertaViagem
+        .Where(condicao)
+        .OrderBy(o => o.Preco)
+        .FirstOrDefault();
+
 }

@@ -13,6 +13,7 @@ public class OfertaViagem: Valida
     private double desconto;
 
     public int Id { get; set; }
+    public bool Ativa { get; set; } = true;
     public Rota Rota { get; set; } 
     public Periodo Periodo { get; set; }
     public double Preco { get; set; }
@@ -21,17 +22,20 @@ public class OfertaViagem: Valida
         get => desconto;
         set 
         {
-            desconto = value;
-
-            if (desconto < 0)
-                Preco = Preco;
-            else if (desconto >= Preco)
+            if(value != 0)
             {
-                Preco *= (1 - DESCONTO_MAXIMO);
+                if (value < 0)
+                    desconto = 0;
+                else 
+                    desconto = value;
+
+                if (desconto >= Preco)
+                {
+                    Preco *= (1 - DESCONTO_MAXIMO);
+                }
+                else
+                    Preco -= desconto;
             }
-            else
-                Preco -= desconto;
-            
         }  
     }
 
